@@ -1,17 +1,19 @@
 import './Signin.css'
 import Socials from './Socials.jsx'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import {Link,useNavigate } from "react-router-dom"
 
 export default function SignIN() {
 
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   let [responseData, setResponseData] = useState([]);
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/user/`)
             .then(response => response.json())
-           // .then(data => console.log(data))
+          //  .then(data => console.log(data))
            .then(data => setResponseData(data))
     }, []);
 
@@ -21,6 +23,9 @@ export default function SignIN() {
     if (foundObject) {
       console.log("Found record");
       // redirect to home
+       navigate('/home'); // useNavigate hook to navigate
+
+
     }
     else {
         console.log("No record found");
@@ -63,7 +68,7 @@ export default function SignIN() {
             </div>
             <button onClick={handleLogin}>Login</button>
             <div className="not-registered center-text">
-              <p>Not Registered? <a href="#">Create an Account</a></p>
+              <p>Not Registered? <Link to="/signup">Create an Account</Link></p>
             </div>
             <span className="login-separator"></span>
             <Socials />
