@@ -13,8 +13,8 @@ export default function SignIN() {
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/api/user/`)
             .then(response => response.json())
-          //  .then(data => console.log(data))
-           .then(data => setResponseData(data))
+           // .then(data => console.log(data))
+          .then(data => setResponseData(data))
     }, []);
 
   const handleLogin = () => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom"
 
 export default function SignUp(){
   const [formData, setFormData] = useState({
@@ -7,6 +8,7 @@ export default function SignUp(){
     Email: '',
     Password: '',
   });
+  const navigate = useNavigate();
 
 
   const handleChange =  (e) => {
@@ -32,6 +34,8 @@ export default function SignUp(){
 
       if (response.ok) {
         console.log('Data added successfully!');
+        navigate('/home'); // useNavigate hook to navigate
+
 
       } else {
         console.error('Error adding data:');
