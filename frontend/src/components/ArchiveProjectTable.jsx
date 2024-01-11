@@ -77,6 +77,7 @@ export default function ArchiveProjectTable() {
             <td>Actions</td>
           </tr>
         </thead>
+      
         <tbody>
           {archivedProjectList.map((row) => (
             <tr key={row.id}>

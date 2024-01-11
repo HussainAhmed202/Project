@@ -1,0 +1,25 @@
+.split-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.left-panel,
+.right-panel {
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.resize-bar {
+    width: 10px;
+    cursor: col-resize;
+    background-color: #ddd;
+}
+
+.left-panel {
+    min-width: 100px;
+}
+
+.right-panel {
+    flex-grow: 1;
+}
