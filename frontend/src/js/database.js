@@ -1,5 +1,5 @@
 export async function getProjectTable() {
-    const URL = "http://127.0.0.1:8000/api/project/";
+    const URL = "http://127.0.0.1:8000/api/project";
 
     const project = await fetch(URL);
     const response = await project.json();

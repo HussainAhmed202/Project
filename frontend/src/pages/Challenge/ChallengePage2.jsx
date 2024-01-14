@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './SplitLayout.css';
-import DisplayChallenge from './DisplayChallenge';
+import DisplayChallenge from '../../components/DisplayChallenge';
+import Editor from '../../components/Editor';
 
 const ChallengePage = () => {
   const [leftWidth, setLeftWidth] = useState('50%');
@@ -58,7 +59,7 @@ const ChallengePage = () => {
       <div className="resize-bar" onMouseDown={startResize}></div>
       
       <div className="right-panel" style={{ color: "wheat", width: `calc(100% - ${leftWidth})` }}>
-        Right Panel
+       <Editor/>
       </div>
     </div>
   );

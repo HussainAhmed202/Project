@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+//import Cookies from 'js-cookie';
+import CSRFToken from '../../components/csrftoken';
+
 
 export default function SignUp(){
   const [formData, setFormData] = useState({
@@ -18,28 +21,34 @@ export default function SignUp(){
     });
   };
 
+
+  // send data to the server
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
+ 
+    //formData =  Object { FirstName: "pop", LastName: "lop", Email: "poplop@mail.com", Password: "sdfsdfs" } 
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/user/', {
+      const response = await fetch('http://127.0.0.1:8000/api/signup', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-
       if (response.ok) {
-        console.log('Data added successfully!');
-        navigate('/home'); // useNavigate hook to navigate
+        const data = await response.json();
+        console.log(data);
+        // add token to local storage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
+         navigate('/home'); // useNavigate hook to navigate
 
-
-      } else {
-        console.error('Error adding data:');
+        
       }
+      
     } catch (error) {
       console.error('Network error:', error.message);
     }

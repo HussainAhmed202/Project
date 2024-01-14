@@ -1,25 +1,28 @@
-import Signin from './components/Signin.jsx'
-import SignUp from './components/SignUp.jsx'
-import Home from './components/Home.jsx'
+import Signin from './pages/Signin/Signin.jsx'
+import SignUp from './pages/SignUp/SignUp.jsx'
+import Home from './pages/Home/Home.jsx'
 import AllProjectTable from './components/AllProjectTable.jsx'
 import TrashProjectTable from './components/TrashProjectTable.jsx'
 import ArchiveProjectTable from './components/ArchiveProjectTable.jsx'
-import Home2 from './components/home2.jsx'
 //import ChallengePage from './components/ChallengePage.jsx'
-import ChallengePage from './components/ChallengePage2.jsx'
+import ChallengePage from './pages/Challenge/ChallengePage2.jsx'
 
 
 
 
 import { Routes, Route } from 'react-router-dom'
+import Users from './components/fetch.jsx'
+import CSRFToken from './components/csrftoken.jsx'
+import Project from './pages/Projects/Project.jsx'
 
 export default function App() {
     return (
-        <ChallengePage/>
-        // <Routes>
-        //     <Route path="/" element={<Signin />} />
-        //     <Route path="/signup" element={<SignUp />}/>
-        //     <Route path="/home" element={<Home />} />           
-        // </Routes>
+    
+        <Routes>
+            <Route path="/" element={<Signin />} />
+            <Route path="/signup" element={<SignUp />}/>
+            <Route path="/home" element={<Home />} /> 
+            <Route path="/project" element={<Project />} /> 
+        </Routes>
     )
 }

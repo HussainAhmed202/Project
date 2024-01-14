@@ -14,12 +14,16 @@ import { useEffect, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 
 function Editor() {
-
-    const [selectedTheme, setSelectedTheme] = useState(dracula);
-    const [selectedLang, setselectedLang] = useState('python');
-    const [isLoading, setLoading] = useState(false);
+  
+  const [selectedTheme, setSelectedTheme] = useState(dracula);
+  const [selectedLang, setselectedLang] = useState('python');
+  const [isLoading, setLoading] = useState(false);
+  let [code, setCode] = useState("");
+  
 
      useEffect(() => {
     function simulateNetworkRequest() {
@@ -33,10 +37,35 @@ function Editor() {
     }
   }, [isLoading]);
 
-  const handleClick = () => setLoading(true);
 
-        
-    return (
+
+
+  async function handleClick(codeContent) {
+    // sends the code to the backend
+    setLoading(true);
+
+     try {
+      const response = await fetch('http://127.0.0.1:8000/execute/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: codeContent }),
+      });
+
+      if (response.ok) {
+        console.log('Data added successfully!');
+  
+      } else {
+        console.error('Error adding data:');
+      }
+    } catch (error) {
+      console.error('Network error:', error.message);
+    }
+  };
+
+
+  return (
 
 
         <>
@@ -53,28 +82,42 @@ function Editor() {
                 <DropdownButton id="dropdown-button-dark-example2" variant="dark" className="mt-2" data-bs-theme="dark" title={selectedLang}>
                     <Dropdown.Item onClick={()=>setselectedLang('python')}>Python</Dropdown.Item>
                     <Dropdown.Item onClick={()=>setselectedLang('javascript')}>JavaScript</Dropdown.Item>
-                    <Dropdown.Item onClick={()=>setselectedLang('java')}>JAVA</Dropdown.Item>
+                    <Dropdown.Item onClick={()=>setselectedLang('java')}>Java</Dropdown.Item>
                     <Dropdown.Item onClick={()=>setselectedLang('c')}>C</Dropdown.Item>
                 </DropdownButton>
             </div>
 
             <CodeMirror
                // value={code}
-                height="500px"
+                height="250px"
                 theme={selectedTheme}
                 extensions={[loadLanguage(selectedLang)]}     
-                onChange={(value, viewUpdate) => {
-                    console.log('value:', value);
-                }}
+          onChange={(value, viewUpdate) => {
+            console.log('value:', value);
+            setCode(value);
+          }}
+          options = {{
+              mode: selectedLang,}
+          }
             />
     
-             <Button
+             
+
+    <Dropdown as={ButtonGroup} style = {{marginTop:"5px"}}>
+          <Button style={{ backgroundColor: "rgb(141, 3, 141)" }}
       variant="outline-light"
       disabled={isLoading}
-      onClick={!isLoading ? handleClick : null}
-    >
+            onClick={!isLoading ? () =>  handleClick(code) : null}>
       {isLoading ? 'Submitting' : 'Submit'}
     </Button>
+
+      <Dropdown.Toggle split variant="outline-light"  style={{backgroundColor:"rgb(141, 3, 141)"}}  id="dropdown-split-basic" />
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-2">Run Code</Dropdown.Item>
+            <Dropdown.Item href="#/action-1">Run Test Cases</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
 
 
         

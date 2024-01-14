@@ -14,3 +14,15 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = "__all__"
+
+
+class LoginSerializer(serializers.Serializer):
+    Email = serializers.CharField()
+    Password = serializers.CharField()
+
+
+class SignUpSerializer(serializers.Serializer):
+    Email = serializers.CharField()
+    Password = serializers.CharField()
+    FirstName = serializers.CharField()
+    LastName = serializers.CharField()

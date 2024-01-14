@@ -2,27 +2,31 @@ import { useEffect, useState } from "react";
 
 export default function Users() {
 
-    let [model, setModel] = useState("user")    
-    let [responseData,setResponseData] = useState([])
+   // useEffect(() => {
+        //     fetch(`https://dummyjson.com/carts`)
+        //         .then(response => {
+        //             if (response.ok) {
+        //                 console.log(response.status);
+        //                 return response.json();
+        //             }
+        //         })    
+        //         .then(data => console.log(data))
+            
+        // }, []);
 
-    useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/${model}/`)
-            .then(response => response.json())
-            //.then(data => console.log(data))
-            .then(data => setResponseData(data))
-    }, [model]);
 
+        async function foo() {
+            let res = await fetch(`https://dummyjson.com/carts`);
+            if (res.ok) {
+                console.log(res.status);
+                let data = await res.json();
+            }
+            
+        }
+    
+    
+        useEffect(() => {
+            foo();
+        }, []);
 
-    return (
-        <>
-            <h1>List {model} Database Models</h1>
-            <button onClick={() => { setModel("user") }}>User</button>
-            <button onClick={() => { setModel("project") }}>Project</button>
-            {responseData.map(item => {
-                return <pre key={item.id}>{JSON.stringify(item)}</pre>
-            }                
-            )};
-        </>
-    );
-
-}
+};

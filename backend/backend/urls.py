@@ -19,12 +19,21 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-router = routers.DefaultRouter()
-router.register(r"user", views.GetUser)
-router.register(r"project", views.ProjectView)
+# router = routers.DefaultRouter()
+# router.register(r"user-login", views.LoginView, basename="login")
+# router.register(r"project", views.ProjectView)
 
+
+# from app.views import current_datetime
+
+
+# path("api/csrf", views.GetCSRFToken.as_view()),
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(router.urls)),
+    path("api/login", views.LoginView.as_view()),
+    path("api/signup", views.SignUpView.as_view()),
+    path("api/all-projects", views.AllProjectView.as_view()),
+    path("api/trash-projects", views.TrashProjectView.as_view()),
+    path("api/archive-projects", views.ArchiveProjectView.as_view()),
 ]

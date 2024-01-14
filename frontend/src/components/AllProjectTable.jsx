@@ -1,111 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { Trash, CloudDownload, Archive } from 'react-bootstrap-icons';
-import {getProjectTable,updateProjectTable} from '../js/database'
-
-
-async function handleTrashClick(dataRow, projectList, setProjectList) {
-    //dataRow is the selected project
-    // projectList is the state variable which is array of non-trash projects
-    // setProjectList is the updator method of projectList
-
-    console.log(`Previous object\n ${JSON.stringify(dataRow)}`);
-
-    // user trashes project
-    dataRow.IsTrash = true;
-    console.log(`Updated object\n ${JSON.stringify(dataRow)}`);
-
-    await updateProjectTable(dataRow);
-
-    //remove the trashed record from display
-    const list = projectList.filter(item => item.id !== dataRow.id);
-    setProjectList(list);
-
-}
-
-
-async function handleArchiveClick(dataRow, projectList, setProjectList) {
-    //dataRow is the selected project
-    // projectList is the state variable which is array of all non-archived projects
-    // setProjectList is the updator method of projectList
-
-    console.log(`Previous object\n ${JSON.stringify(dataRow)}`);
-
-    // user archives project
-    dataRow.IsArchived = true;
-    console.log(`Updated object\n ${JSON.stringify(dataRow)}`);
-
-    await updateProjectTable(dataRow);
-
-    //remove the archived record from display
-    const list = projectList.filter(item => item.id !== dataRow.id);
-    setProjectList(list);
-
-}
-
-
-async function handleDownloadClick(dataRow,workingProjectList,setWorkingProjectList) {
-  // //dataRow is the selected project which the user wants to restore 
-  // // workingProjectList is the state variable which is array of all trashed allProjectsList
-  // // setWorkingProjectList is the updator method of workingProjectList
-
-  // console.log(`Previous object\n ${JSON.stringify(dataRow)}`);
-    
-  // // user restores the trashed project
-  // dataRow.IsTrash = true; 
-  // console.log(`Updated object\n ${JSON.stringify(dataRow)}`);
-
-  // await updateProjectTable(dataRow);
-   
-  // //remove the untrashed record from display
-  // const list = workingProjectList.filter(item => item.id !== dataRow.idNon);
-  // setWorkingProjectList(list);
-
-}
+import { Link } from "react-router-dom"
 
 export default function AllProjectTable() {
+
+  let [userProject, setuserProjects] = useState([]);
   
-  const [allProjectsList, setAllProjectList] = useState([]);
- const [workingProjectList, setWorkingProjectList] = useState([]);  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let fetchedProjects = await getProjectTable();
-        setAllProjectList(fetchedProjects);
-      } catch (error) {
-        console.error("Error in fetching allProjectsList:", error);
-      }
-    };
-
-    fetchData();
-  }, []); 
-
-
+  useEffect(() => { 
+    const getProject = async () => {
+    const response = await fetch("http://127.0.0.1:8000/api/all-projects", {
+      method: 'POST',
+       headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({"token":localStorage.getItem("token"),"username":localStorage.getItem("username")}),
+    }
+    );
+    if (response.ok) {
+      let projects = await response.json();
+      setuserProjects(projects);
+      console.log(projects);
+    
+      if (projects.length !== 0) {
+        projects.forEach(project => {
+          console.log(project);
+        });      
+      } 
+    }
+    else {
+      console.log("Failed to fetch project");
+    }
+  }
+    getProject();
+  }, []);
   
-  useEffect(() => {
-    // executes when allProjectsList state changes 
-
-    console.log(`allProjectsList ${allProjectsList}`);
-
-    if (allProjectsList.length > 0) {
-      // allProjectsList fetched completely
-      const filteredProjects = allProjectsList.filter((item) => !item.IsArchived && !item.IsTrash);
-      setWorkingProjectList(filteredProjects);     
-    }
-  }, [allProjectsList]);
-
-
-  useEffect(() => {
-    // Executes when workingProjectList is updated
-    console.log(`workingProjectList ${workingProjectList}`);
-
-    if (workingProjectList.length === 0) {
-      // fetch not complete
-      console.log("Waiting for data...");
-    }
-  }, [workingProjectList]);
-
   
   return (
     <div>
@@ -118,19 +48,18 @@ export default function AllProjectTable() {
           </tr>
         </thead>
         <tbody>
-          {workingProjectList.map((row) => (
+          {userProject.map((row) => (
             <tr key={row.id}>
-              <td><a href="#">{row.ProjName}</a></td>
+              <td><Link to="/project">{row.ProjName}</Link></td>
               <td>{row.DateModified}</td>
               <td>
-                  
                 <Archive
-                   onClick={() => handleArchiveClick(row,workingProjectList,setWorkingProjectList)}
+                   //onClick={() => handleArchiveClick(row,userProject,setuseruserProjects)}
                     className="text-warning"
                     style={{ cursor: 'pointer' }}
                 />  
                  <Trash
-                 onClick={() => handleTrashClick(row,workingProjectList,setWorkingProjectList)}
+                // onClick={() => handleTrashClick(row,userProjects,setuseruserProjects)}
                   className="text-danger"
                   style={{ cursor: 'pointer' }}
                 />
