@@ -17,52 +17,31 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 
+
 function Editor({ selectedLang, setselectedLang, code, setCode ,height}) {
   
 
-  const [isLoading, setLoading] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState(dracula);
 
+  //    try {
+  //     const response = await fetch('http://127.0.0.1:8000/execute/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ code: codeContent }),
+  //     });
+
+  //     if (response.ok) {
+  //       console.log('Data added successfully!');
   
-
-     useEffect(() => {
-    function simulateNetworkRequest() {
-      return new Promise((resolve) => setTimeout(resolve, 2000));
-    }
-
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
-
-
-
-
-  async function handleClick(codeContent) {
-    // sends the code to the backend
-    setLoading(true);
-
-     try {
-      const response = await fetch('http://127.0.0.1:8000/execute/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code: codeContent }),
-      });
-
-      if (response.ok) {
-        console.log('Data added successfully!');
-  
-      } else {
-        console.error('Error adding data:');
-      }
-    } catch (error) {
-      console.error('Network error:', error.message);
-    }
-  };
+  //     } else {
+  //       console.error('Error adding data:');
+  //     }
+  //   } catch (error) {
+  //     console.error('Network error:', error.message);
+  //   }
+  // };
 
 
   return (
@@ -98,29 +77,8 @@ function Editor({ selectedLang, setselectedLang, code, setCode ,height}) {
               mode: selectedLang,}
           }
             />
-    
-             
 
-    <Dropdown as={ButtonGroup} style = {{marginTop:"5px"}}>
-          <Button style={{ backgroundColor: "rgb(141, 3, 141)" }}
-      variant="outline-light"
-      disabled={isLoading}
-            onClick={!isLoading ? () =>  handleClick(code) : null}>
-      {isLoading ? 'Submitting' : 'Submit'}
-    </Button>
-
-      <Dropdown.Toggle split variant="outline-light"  style={{backgroundColor:"rgb(141, 3, 141)"}}  id="dropdown-split-basic" />
-
-      <Dropdown.Menu>
-        <Dropdown.Item href="#">Run Code</Dropdown.Item>
-            <Dropdown.Item href="#">Run Test Cases</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-
-
-        
-        
-        
+      
         </>
 
        

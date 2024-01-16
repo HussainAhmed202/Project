@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SplitLayout.css';
 import DisplayChallenge from '../../components/DisplayChallenge';
-import Editor from '../../components/Editor';
+import Editor from '../../components/Editor copy';
 
 const ChallengePage = () => {
 

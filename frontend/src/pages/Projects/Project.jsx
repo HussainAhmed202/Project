@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './SplitLayout.css';
-import Editor from '../../components/Editor copy';
+import Editor from '../../components/Editor';
 import { dracula } from '@uiw/codemirror-theme-dracula';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs';
 import { useParams } from 'react-router-dom';
+import { SubmitButton } from '../../components/SubmitButton';
 
 
 const Project = () => {
@@ -34,11 +35,22 @@ const Project = () => {
     fetchProject(projectID);
   }, []);
 
+    
+    function handleRun() {
+        console.log('Running the code');        
+    }
+
+
+    function handleDownload() {
+        console.log('Downloading file');        
+    }
+
+
+    function handleDebug() {
+        console.log('Debugging the code');        
+    }
 
  
-   
-  
-
      const handleInputChange = (event) => {
         setInputText(event.target.value);
         
@@ -46,13 +58,17 @@ const Project = () => {
 
     return (
         <>
-            <h2>Project Details for ID: {projectID}</h2>
             <Editor 
                 selectedLang={selectedLang}
                 setselectedLang={setselectedLang}
                 code={code}
                 setCode={setCode}
-                height="400px"/>
+                height="400px" />
+        
+            <SubmitButton name="Save" plural="Saving" items={{"Run":handleRun, "Debug":handleDebug, "Download":handleDownload}} />
+     
+
+
             <div className="box">
                 <textarea
                     value={inputText}
