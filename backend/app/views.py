@@ -17,6 +17,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+<<<<<<< HEAD
+from .models import Project, User , Ranking ,Question , TableSubmission
+from .serializers import ProjectSerializer, UserSerializer,RankingSerializer,TableSubmissionSerializer,QuestionSerializer
+=======
 from .models import Project, User
 from .serializers import (
     LoginSerializer,
@@ -25,6 +29,7 @@ from .serializers import (
     SignUpSerializer,
     UserSerializer,
 )
+>>>>>>> 93e96852ae9ff7c03340fd05a1bb57776562a89a
 
 
 class LoginView(APIView):
@@ -52,6 +57,23 @@ class LoginView(APIView):
         )
 
 
+<<<<<<< HEAD
+class ProjectView(viewsets.ModelViewSet):
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+
+class RankingView(viewsets.ModelViewSet):
+    serializer_class = RankingSerializer
+    queryset = Ranking.objects.all()
+
+class TableSubmissionView(viewsets.ModelViewSet):
+    serializer_class = TableSubmissionSerializer
+    queryset = TableSubmission.objects.all()
+
+class QuestionView(viewsets.ModelViewSet):
+    serializer_class = QuestionSerializer
+    queryset = Question.objects.all()
+=======
 # @method_decorator(csrf_protect, name="dispatch")
 class SignUpView(APIView):
     def post(self, request, *args, **kwargs):
@@ -222,3 +244,4 @@ class ProjectDetailView(APIView):
         print(serializer.data)
         # return JsonResponse(serializer.data)
         return Response(serializer.data)
+>>>>>>> 93e96852ae9ff7c03340fd05a1bb57776562a89a
