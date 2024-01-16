@@ -1,4 +1,6 @@
 import json
+import os
+import subprocess
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
@@ -19,6 +21,7 @@ from .models import Project, User
 from .serializers import (
     LoginSerializer,
     ProjectSerializer,
+    QuestionSerializer,
     SignUpSerializer,
     UserSerializer,
 )
@@ -154,3 +157,59 @@ class ArchiveProjectView(APIView):
         )
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
+
+
+class QuestionView(APIView):
+    def get(self, request, *args, **kwargs):
+        serializer = QuestionSerializer(request.data)
+        return HttpResponse(serializer)
+
+
+class ExecutionView(APIView):
+    def post(self, request):
+        req = json.dumps(request)
+        os.chdir(os.path.dirname(os.getcwd()))
+        if request["language"] == "Python":
+            p1 = subprocess.run(
+                ["node", "executePython.js", request], capture_output=True, text=True
+            )
+
+        elif request["language"] == "CPP":
+            p1 = subprocess.run(
+                ["node", "executeCPP.js", request], capture_output=True, text=True
+            )
+
+        elif request["language"] == "Java":
+            p1 = subprocess.run(
+                ["node", "executeJava.js", request], capture_output=True, text=True
+            )
+        print(p1)
+        return HttpResponse(p1)
+
+
+class UpdateArchive(APIView):
+    def post(self, request, project_id):
+        try:
+            project = Project.objects.get(id=project_id)
+            project.IsArchived = not project.IsArchived  # Toggle IsArchived field
+            project.save()
+            serializer = ProjectSerializer(project)
+            return Response(serializer.data)
+        except Project.DoesNotExist:
+            return Response(
+                {"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class UpdateTrash(APIView):
+    def post(self, request, project_id):
+        try:
+            project = Project.objects.get(id=project_id)
+            project.IsTrash = not project.IsTrash  # Toggle IsTrash field
+            project.save()
+            serializer = ProjectSerializer(project)
+            return Response(serializer.data)
+        except Project.DoesNotExist:
+            return Response(
+                {"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND
+            )

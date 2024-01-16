@@ -36,4 +36,8 @@ urlpatterns = [
     path("api/all-projects", views.AllProjectView.as_view()),
     path("api/trash-projects", views.TrashProjectView.as_view()),
     path("api/archive-projects", views.ArchiveProjectView.as_view()),
+    path("api/questions", views.QuestionView.as_view()),
+    path("api/exe", views.ExecutionView.as_view()),
+    path("api/update-archive/<int:project_id>", views.UpdateArchive.as_view()),
+    path("api/update-trash/<int:project_id>", views.UpdateTrash.as_view()),
 ]

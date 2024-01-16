@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Project, User
+from .models import Project, Question, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,3 +26,10 @@ class SignUpSerializer(serializers.Serializer):
     Password = serializers.CharField()
     FirstName = serializers.CharField()
     LastName = serializers.CharField()
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        # fields = ("id", "FirstName", "LastName", "Email", "Password")
+        fields = "__all__"

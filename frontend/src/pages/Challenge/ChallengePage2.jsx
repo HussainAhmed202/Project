@@ -4,6 +4,12 @@ import DisplayChallenge from '../../components/DisplayChallenge';
 import Editor from '../../components/Editor';
 
 const ChallengePage = () => {
+
+    const [selectedLang, setselectedLang] = useState('python');
+    let [code, setCode] = useState("");
+
+
+
   const [leftWidth, setLeftWidth] = useState('50%');
 
   const handleResize = (e) => {
@@ -59,7 +65,12 @@ const ChallengePage = () => {
       <div className="resize-bar" onMouseDown={startResize}></div>
       
       <div className="right-panel" style={{ color: "wheat", width: `calc(100% - ${leftWidth})` }}>
-       <Editor/>
+        <Editor 
+                selectedLang={selectedLang}
+                setselectedLang={setselectedLang}
+                code={code}
+                setCode={setCode}
+                height="400px"/>
       </div>
     </div>
   );

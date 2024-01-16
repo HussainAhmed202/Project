@@ -14,15 +14,17 @@ import { Routes, Route } from 'react-router-dom'
 import Users from './components/fetch.jsx'
 import CSRFToken from './components/csrftoken.jsx'
 import Project from './pages/Projects/Project.jsx'
+import Editor from './components/Editor copy.jsx'
 
 export default function App() {
     return (
+
     
         <Routes>
             <Route path="/" element={<Signin />} />
             <Route path="/signup" element={<SignUp />}/>
             <Route path="/home" element={<Home />} /> 
-            <Route path="/project" element={<Project />} /> 
+            <Route path="/project/:projectID" element={<Project />} /> 
         </Routes>
     )
 }

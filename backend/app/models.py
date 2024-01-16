@@ -16,3 +16,14 @@ class Project(models.Model):
     IsTrash = models.BooleanField()
     IsArchived = models.BooleanField()
     OwnerId = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Question(models.Model):
+    type = models.CharField(max_length=50)
+    difficulty = models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
+    points = models.IntegerField()
+    statement = models.TextField()
+    inputFormat = models.TextField()
+    outputFormat = models.TextField()
+    inputConstraint = models.TextField()

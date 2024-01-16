@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { ArrowClockwise } from 'react-bootstrap-icons';
 import { Link } from "react-router-dom"
+import {updateTrashStatus} from '../js/database';
+
 
 export default function TrashProjectTable() {
 
@@ -50,11 +52,11 @@ export default function TrashProjectTable() {
         <tbody>
           {userProject.map((row) => (
             <tr key={row.id}>
-              <td><Link to="/project">{row.ProjName}</Link></td>
-              <td>{row.DateModified}</td>
+               <td><Link to={`/project/${row.ProjectContent}`}>{row.ProjName}</Link></td>
+             <td>{row.DateModified}</td>
               <td>
-                 <ArrowClockwise
-                // onClick={() => handleTrashClick(row,userProject,setuseruserProjects)}
+                <ArrowClockwise
+                  onClick={() => updateTrashStatus(row.id)}
                   className="text-danger"
                   style={{ cursor: 'pointer' }}
                 />

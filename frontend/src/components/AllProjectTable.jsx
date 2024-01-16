@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { Trash, CloudDownload, Archive } from 'react-bootstrap-icons';
 import { Link } from "react-router-dom"
+import {updateArchiveStatus,updateTrashStatus} from '../js/database';
 
 export default function AllProjectTable() {
 
@@ -35,7 +36,7 @@ export default function AllProjectTable() {
   }
     getProject();
   }, []);
-  
+
   
   return (
     <div>
@@ -50,16 +51,16 @@ export default function AllProjectTable() {
         <tbody>
           {userProject.map((row) => (
             <tr key={row.id}>
-              <td><Link to="/project">{row.ProjName}</Link></td>
+              <td><Link to={`/project/${row.id}`}>{row.ProjName}</Link></td>
               <td>{row.DateModified}</td>
               <td>
                 <Archive
-                   //onClick={() => handleArchiveClick(row,userProject,setuseruserProjects)}
+                   onClick={() => updateArchiveStatus(row.id)}
                     className="text-warning"
                     style={{ cursor: 'pointer' }}
                 />  
-                 <Trash
-                // onClick={() => handleTrashClick(row,userProjects,setuseruserProjects)}
+                <Trash
+                  onClick={() => updateTrashStatus(row.id)}
                   className="text-danger"
                   style={{ cursor: 'pointer' }}
                 />
