@@ -58,7 +58,7 @@ function Editor({ selectedLang, setselectedLang, code, setCode ,height}) {
 
           <DropdownButton id="dropdown-button-dark-example2" variant="dark" className="mt-2" data-bs-theme="dark" title={selectedLang}>
               <Dropdown.Item onClick={()=>setselectedLang('python')}>Python</Dropdown.Item>
-              <Dropdown.Item onClick={()=>setselectedLang('javascript')}>JavaScript</Dropdown.Item>
+              <Dropdown.Item onClick={()=>setselectedLang('cpp')}>C++</Dropdown.Item>
               <Dropdown.Item onClick={()=>setselectedLang('java')}>Java</Dropdown.Item>
               <Dropdown.Item onClick={()=>setselectedLang('c')}>C</Dropdown.Item>
           </DropdownButton>

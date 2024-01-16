@@ -25,7 +25,7 @@ const Project = () => {
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/project-detail/${projectID}`);
             const data = await response.json(); // server return the project object
-            setCode(data.ProjectContent);
+            setCode(data.projectContent);
 
         } catch (error) {
             console.error('Error fetching project:', error);
