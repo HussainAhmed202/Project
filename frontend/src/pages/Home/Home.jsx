@@ -5,14 +5,18 @@ import Sidebar from '../../components/Sidebar'
 import TrashProjectTable from "../../components/TrashProjectTable";
 import ArchiveProjectTable from "../../components/ArchiveProjectTable";
 import Popup from "../../components/Popup";
-
+import SidebarItem from "../../components/SidebarItem";
+import items from "../../data/sidebar.json";
 
 export default function Home() {
+  console.log(window.location.pathname);
   return ( 
     <>
       <BrandExample />
       <div className="main">
-        <Sidebar />
+        <div className="sidebar">
+          { items.map((item, index) => <SidebarItem key={index} item={item} />) }
+        </div>
         <div className="container">
           <SearchBar />
           <br />

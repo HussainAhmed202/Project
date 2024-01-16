@@ -52,7 +52,7 @@ export default function TrashProjectTable() {
         <tbody>
           {userProject.map((row) => (
             <tr key={row.id}>
-               <td><Link to={`/project/${row.ProjectContent}`}>{row.projName}</Link></td>
+               <td>{row.projName}</td>
              <td>{row.dateModified}</td>
               <td>
                 <ArrowClockwise

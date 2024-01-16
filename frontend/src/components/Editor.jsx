@@ -18,7 +18,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 
 
-function Editor({ selectedLang, setselectedLang, code, setCode ,height}) {
+function Editor({ selectedLang, setselectedLang, code, setCode ,height,width}) {
   
 
   const [selectedTheme, setSelectedTheme] = useState(dracula);
@@ -66,7 +66,8 @@ function Editor({ selectedLang, setselectedLang, code, setCode ,height}) {
 
             <CodeMirror
                value={code}
-                height={height}
+        height={height}
+        width={width}
                 theme={selectedTheme}
                 extensions={[loadLanguage(selectedLang)]}     
           onChange={(value, viewUpdate) => {

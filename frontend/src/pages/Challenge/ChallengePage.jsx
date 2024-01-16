@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import './SplitLayout.css';
 import DisplayChallenge from '../../components/DisplayChallenge';
 import Editor from '../../components/Editor copy';
+import { useParams } from 'react-router-dom';
+import { SubmitButton } from '../../components/SubmitButton';
 
 const ChallengePage = () => {
 
     const [selectedLang, setselectedLang] = useState('python');
-    let [code, setCode] = useState("");
+  let [code, setCode] = useState("");
+
+  // id of the selected question passed via URL
+    const { questionID } = useParams();
 
 
 
@@ -43,6 +48,21 @@ const ChallengePage = () => {
   };
 
    
+    function handleRun() {
+        console.log('Running the code');        
+    }
+
+   
+    function handleTestCases() {
+        console.log('Running the test cases');        
+  }
+  
+  function submitProject() {
+    console.log("Submitting the project");
+    
+  }
+
+   
  
     const question =
         {
@@ -70,7 +90,14 @@ const ChallengePage = () => {
                 setselectedLang={setselectedLang}
                 code={code}
                 setCode={setCode}
-                height="400px"/>
+          height="500px" />
+        <SubmitButton
+            name="Submit"
+            plural="Submitting"
+          items={{ "Run": handleRun, "Run Test Cases": handleTestCases }}
+          method={submitProject}
+          />
+         
       </div>
     </div>
   );

@@ -2,18 +2,19 @@
     {
         "title": "New Project",
         "isButton": true,
-        "action": "Your Button Action"
+        "action": "Your Button Action",
+        "path": "/project"
     },
     {
         "title": "All Projects",
-        "path": "#"
+        "path": "/home"
     },
     {
         "title": "Archived Projects",
-        "path": "#"
+        "path": "/home/archive"
     },
     {
         "title": "Trashed Projects",
-        "path": "#"
+        "path": "/home/trash"
     }
 ]
