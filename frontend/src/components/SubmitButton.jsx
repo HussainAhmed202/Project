@@ -6,7 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 export function SubmitButton({name,plural,items}) {
   const [isLoading, setLoading] = useState(false);
-  
+  let entries = Object.entries(items);
   
      useEffect(() => {
     function simulateNetworkRequest() {
@@ -65,9 +65,11 @@ export function SubmitButton({name,plural,items}) {
 
       <Dropdown.Toggle split variant="outline-light"  style={{backgroundColor:"rgb(141, 3, 141)"}}  id="dropdown-split-basic" />
           <Dropdown.Menu>        
-           {items.map((item, index) => (
-             <Dropdown.Item key={index} href="#">{item}</Dropdown.Item>
-           ))}
+           {entries.map(([key, value], index) => (
+    <Dropdown.Item key={index} onClick={value} href="#">
+      {key}
+    </Dropdown.Item>
+  ))}
       </Dropdown.Menu>
     </Dropdown>
 

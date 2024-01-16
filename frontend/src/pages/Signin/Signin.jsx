@@ -18,24 +18,14 @@ export default function SignIN() {
 
 
   function onClick() {
-    const dataToSend = JSON.stringify({ "Email": username, "Password": password });
-    //const csrfToken = getCookie('csrftoken');
-
-   // console.log(document.cookie);
-
-     // Check if CSRF token is available
-    // if (!csrfToken) {
-    //     console.error('CSRF token is missing. Unable to make the request.');
-    //     return;
-    // }
-
+    const dataToSend = JSON.stringify({ "email": username, "password": password });
+   
     // send data to the server
       fetch("http://127.0.0.1:8000/api/login", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
-         // "X-CSRFToken":csrfToken,    
+          'Content-Type': 'application/json',    
         },
         body: dataToSend,
       })
@@ -51,7 +41,7 @@ export default function SignIN() {
             console.log(data);
              // add token to local storage
             localStorage.setItem('token', data.token);
-            localStorage.setItem('username', data.Email);
+            localStorage.setItem('username', data.email);
             navigate('/home'); // useNavigate hook to navigate
           }
         })
@@ -61,73 +51,8 @@ export default function SignIN() {
           )
   }
 
-  //   // send credentials to the server for authentication
-  //   const handleLogin = async () => {
-  //   try {
-  //     // Fetch CSRF token from the server
-  //     const csrfResponse = await fetch('http://127.0.0.1:8000/api/login', {
-  //       method: 'GET',
-  //       headers: {'X-CSRFToken': csrftoken},
-  //       credentials: 'include', // Include credentials for cross-origin requests
-  //     });
-
-  //     if (!csrfResponse.ok) {
-  //       console.error('Failed to fetch CSRF token');
-  //       return;
-  //     }
-
-  //     const csrfToken = csrfResponse.headers.get('X-CSRFToken');
-
-  //     // Send login credentials to the Django API
-  //     const response = await fetch('http://your-django-api.com/api/login/', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'X-CSRFToken': csrfToken, // Include the CSRF token in the headers
-  //       },
-  //       credentials: 'include', // Include credentials for cross-origin requests
-  //       body: JSON.stringify({
-  //         username: username,
-  //         password: password,
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('Login successful');
-  //       // Redirect or perform any actions upon successful login
-  //     } else {
-  //       console.error('Login failed');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during login:', error.message);
-  //   }
-  // };
-
-  
-
-  
-  // const handleLogin = () => {
-  //   console.log(username, password);
-  //   const foundObject = responseData.find((response) => response.FirstName === username);
-  //   if (foundObject) {
-  //     console.log("Found record");
-  //     // redirect to home
-  //      navigate('/home'); // useNavigate hook to navigate
-
-
-  //   }
-  //   else {
-  //       console.log("No record found");
-  //   }
-  // };
- 
-
   return (
     <div className="container-login">
-        {/* <div className="header-login">
-          <div className="header-login-box"></div>
-        </div> */}
-    
       <div className="login-box">
         <div className="login">
           <h1>Sign in</h1>
@@ -151,7 +76,7 @@ export default function SignIN() {
                 &nbsp;&nbsp;Remember me
               </span>
               <span className="forgot-password">
-                <Link to="/signup">Forgot your password?</Link>
+                <Link to="/change-password">Forgot your password?</Link>
               </span>
             </div>
             <button onClick={onClick}>Login</button>

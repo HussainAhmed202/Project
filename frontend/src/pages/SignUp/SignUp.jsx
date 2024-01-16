@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
-//import Cookies from 'js-cookie';
-import CSRFToken from '../../components/csrftoken';
 
 
 export default function SignUp(){
   const [formData, setFormData] = useState({
-    FirstName: '',
-    LastName: '',
-    Email: '',
-    Password: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   });
   const navigate = useNavigate();
 
@@ -26,8 +24,6 @@ export default function SignUp(){
   const handleSubmit = async (e) => {
     e.preventDefault();
  
-    //formData =  Object { FirstName: "pop", LastName: "lop", Email: "poplop@mail.com", Password: "sdfsdfs" } 
-
     try {
       const response = await fetch('http://127.0.0.1:8000/api/signup', {
         method: 'POST',
@@ -45,8 +41,6 @@ export default function SignUp(){
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
          navigate('/home'); // useNavigate hook to navigate
-
-        
       }
       
     } catch (error) {
@@ -65,8 +59,8 @@ export default function SignUp(){
           First Name:
           <input
             type="text"
-            name="FirstName"
-            value={formData.FirstName}
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
           />
         </label>
@@ -75,8 +69,8 @@ export default function SignUp(){
           Last Name:
           <input
             type="text"
-            name="LastName"
-            value={formData.LastName}
+            name="lastName"
+            value={formData.lastName}
             onChange={handleChange}
           />
         </label>
@@ -85,8 +79,8 @@ export default function SignUp(){
           Email:
           <input
             type="email"
-            name="Email"
-            value={formData.Email}
+            name="email"
+            value={formData.email}
             onChange={handleChange}
           />
         </label>
@@ -95,8 +89,8 @@ export default function SignUp(){
           Password:
           <input
             type="password"
-            name="Password"
-            value={formData.Password}
+            name="password"
+            value={formData.password}
             onChange={handleChange}
           />
         </label>

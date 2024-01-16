@@ -2,34 +2,22 @@ import json
 import os
 import subprocess
 
-from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, JsonResponse
-from django.middleware.csrf import get_token
-from django.shortcuts import get_object_or_404, render
-from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.decorators.csrf import csrf_exempt, csrf_protect, ensure_csrf_cookie
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-<<<<<<< HEAD
-from .models import Project, User , Ranking ,Question , TableSubmission
-from .serializers import ProjectSerializer, UserSerializer,RankingSerializer,TableSubmissionSerializer,QuestionSerializer
-=======
-from .models import Project, User
+from .models import Project, Question, Ranking, TableSubmission, User
 from .serializers import (
     LoginSerializer,
     ProjectSerializer,
     QuestionSerializer,
+    RankingSerializer,
     SignUpSerializer,
-    UserSerializer,
+    TableSubmissionSerializer,
 )
->>>>>>> 93e96852ae9ff7c03340fd05a1bb57776562a89a
 
 
 class LoginView(APIView):
@@ -39,16 +27,16 @@ class LoginView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        username = serializer.validated_data["Email"]
-        password = serializer.validated_data["Password"]
+        username = serializer.validated_data["email"]
+        password = serializer.validated_data["password"]
         # hashed_password = make_password(password)
         #  if User.objects.filter(Email=username, Password=hashed_password).exists():
         if User.objects.filter(
-            Email=username,
+            email=username,
         ).exists():
             # valid user
             return Response(
-                {"Email": username, "Password": password, "token": "xyz123"},
+                {"email": username, "password": password, "token": "xyz123"},
                 status=status.HTTP_200_OK,
             )
         return JsonResponse(
@@ -57,24 +45,16 @@ class LoginView(APIView):
         )
 
 
-<<<<<<< HEAD
-class ProjectView(viewsets.ModelViewSet):
-    serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
-
 class RankingView(viewsets.ModelViewSet):
     serializer_class = RankingSerializer
     queryset = Ranking.objects.all()
+
 
 class TableSubmissionView(viewsets.ModelViewSet):
     serializer_class = TableSubmissionSerializer
     queryset = TableSubmission.objects.all()
 
-class QuestionView(viewsets.ModelViewSet):
-    serializer_class = QuestionSerializer
-    queryset = Question.objects.all()
-=======
-# @method_decorator(csrf_protect, name="dispatch")
+
 class SignUpView(APIView):
     def post(self, request, *args, **kwargs):
         # data = {'FirstName': 'pop', 'LastName': 'lop', 'Email': 'poplop@mail.com', 'Password': 'sdfsdfs'}
@@ -82,13 +62,13 @@ class SignUpView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        username = serializer.validated_data["Email"]
-        password = serializer.validated_data["Password"]
-        firstname = serializer.validated_data["FirstName"]
-        lastname = serializer.validated_data["LastName"]
+        username = serializer.validated_data["email"]
+        password = serializer.validated_data["password"]
+        firstname = serializer.validated_data["firstName"]
+        lastname = serializer.validated_data["lastName"]
 
         # Check if the user already exists
-        if User.objects.filter(Email=username).exists():
+        if User.objects.filter(email=username).exists():
             return JsonResponse(
                 {"Error": "User with this email already exists"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -96,14 +76,14 @@ class SignUpView(APIView):
         else:
             hashed_password = make_password(password)
             user = User.objects.create(
-                Email=username,
-                Password=hashed_password,
-                FirstName=firstname,
-                LastName=lastname,
+                email=username,
+                password=hashed_password,
+                firstName=firstname,
+                lastName=lastname,
             )
             user.save()
 
-            my_user = User.objects.get(Email=username)
+            my_user = User.objects.get(email=username)
             print(my_user)
 
             # token, created = Token.objects.get_or_create(user=my_user)
@@ -121,27 +101,18 @@ class SignUpView(APIView):
             )
 
 
-# @method_decorator(ensure_csrf_cookie, name="dispatch")
-# class GetCSRFToken(APIView):
-#     # provides csrf token to client when get request
-
-#     def get(self, request, *args, **kwargs):
-#         csrf_token = get_token(request)
-#         return JsonResponse({"csrfToken": csrf_token})
-
-
 class AllProjectView(APIView):
     def post(self, request):
         print(request.data)
 
         # Retrieve the user instance based on the username
-        user_instance = get_object_or_404(User, Email=request.data["username"])
+        user_instance = get_object_or_404(User, email=request.data["username"])
 
         # Access the user's primary key (id)
         user_id = user_instance.id
 
         projects = Project.objects.filter(
-            OwnerId=user_id, IsTrash=False, IsArchived=False
+            ownerId=user_id, isTrash=False, isArchived=False
         )
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
@@ -152,13 +123,13 @@ class TrashProjectView(APIView):
         print(request.data)
 
         # Retrieve the user instance based on the username
-        user_instance = get_object_or_404(User, Email=request.data["username"])
+        user_instance = get_object_or_404(User, email=request.data["username"])
 
         # Access the user's primary key (id)
         user_id = user_instance.id
 
         projects = Project.objects.filter(
-            OwnerId=user_id, IsTrash=True, IsArchived=False
+            ownerId=user_id, isTrash=True, isArchived=False
         )
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
@@ -169,13 +140,13 @@ class ArchiveProjectView(APIView):
         print(request.data)
 
         # Retrieve the user instance based on the username
-        user_instance = get_object_or_404(User, Email=request.data["username"])
+        user_instance = get_object_or_404(User, email=request.data["username"])
 
         # Access the user's primary key (id)
         user_id = user_instance.id
 
         projects = Project.objects.filter(
-            OwnerId=user_id, IsTrash=False, IsArchived=True
+            ownerId=user_id, isTrash=False, isArchived=True
         )
         serializer = ProjectSerializer(projects, many=True)
         return Response(serializer.data)
@@ -213,7 +184,8 @@ class UpdateArchive(APIView):
     def post(self, request, project_id):
         try:
             project = Project.objects.get(id=project_id)
-            project.IsArchived = not project.IsArchived  # Toggle IsArchived field
+            project.isTrash = False
+            project.isArchived = not project.isArchived  # Toggle isArchived field
             project.save()
             serializer = ProjectSerializer(project)
             return Response(serializer.data)
@@ -227,7 +199,8 @@ class UpdateTrash(APIView):
     def post(self, request, project_id):
         try:
             project = Project.objects.get(id=project_id)
-            project.IsTrash = not project.IsTrash  # Toggle IsTrash field
+            project.isArchived = False
+            project.isTrash = not project.isTrash  # Toggle isTrash field
             project.save()
             serializer = ProjectSerializer(project)
             return Response(serializer.data)
@@ -244,4 +217,3 @@ class ProjectDetailView(APIView):
         print(serializer.data)
         # return JsonResponse(serializer.data)
         return Response(serializer.data)
->>>>>>> 93e96852ae9ff7c03340fd05a1bb57776562a89a

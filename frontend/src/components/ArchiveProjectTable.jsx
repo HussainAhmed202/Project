@@ -52,8 +52,8 @@ export default function TrashProjectTable() {
         <tbody>
           {userProject.map((row) => (
             <tr key={row.id}>
-              <td><Link to={`/project/${row.ProjectContent}`}>{row.ProjName}</Link></td>
-            <td>{row.DateModified}</td>
+              <td><Link to={`/project/${row.ProjectContent}`}>{row.projName}</Link></td>
+            <td>{row.dateModified}</td>
               <td>
                 <ArrowClockwise
                   onClick={() => updateArchiveStatus(row.id)}

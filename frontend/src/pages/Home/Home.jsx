@@ -4,22 +4,27 @@ import SearchBar from "../../components/SearchBar";
 import Sidebar from '../../components/Sidebar'
 import TrashProjectTable from "../../components/TrashProjectTable";
 import ArchiveProjectTable from "../../components/ArchiveProjectTable";
+import Popup from "../../components/Popup";
 
 
 export default function Home() {
-    return (
+  return ( 
     <>
-        <BrandExample />
-        <div className="main">
-                <Sidebar />
-                <div className="container">
-                    <SearchBar />
-                    <br />
-                    <AllProjectTable />
-                    <TrashProjectTable />
-                    <ArchiveProjectTable/>    
-                </div>
-         </div>
-    </>
+      <BrandExample />
+      <div className="main">
+        <Sidebar />
+        <div className="container">
+          <SearchBar />
+          <br />
+          <AllProjectTable /> 
+          <TrashProjectTable />
+          <ArchiveProjectTable /> 
+           <Popup/>
+        </div>
+       
+     </div>
+   </>
+      
   )
+
 };

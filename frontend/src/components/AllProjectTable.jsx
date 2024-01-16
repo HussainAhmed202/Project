@@ -51,8 +51,8 @@ export default function AllProjectTable() {
         <tbody>
           {userProject.map((row) => (
             <tr key={row.id}>
-              <td><Link to={`/project/${row.id}`}>{row.ProjName}</Link></td>
-              <td>{row.DateModified}</td>
+              <td><Link to={`/project/${row.id}`}>{row.projName}</Link></td>
+              <td>{row.dateModified}</td>
               <td>
                 <Archive
                    onClick={() => updateArchiveStatus(row.id)}
