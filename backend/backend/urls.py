@@ -40,4 +40,5 @@ urlpatterns = [
     path("api/exe", views.ExecutionView.as_view()),
     path("api/update-archive/<int:project_id>", views.UpdateArchive.as_view()),
     path("api/update-trash/<int:project_id>", views.UpdateTrash.as_view()),
+    path("api/project-detail/<int:project_id>", views.ProjectDetailView.as_view()),
 ]

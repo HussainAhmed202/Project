@@ -11,14 +11,28 @@ const Project = () => {
     const [outputText, setOutputText] = useState('');
     const [selectedLang, setselectedLang] = useState('python');
     let [code, setCode] = useState("");
+    
+
+    // id of the selected project passed via URL
     const { projectID } = useParams();
+    //let [userProjectID, setUserProjectID] = useState(projectID);
 
 
 
-    useEffect(() => {
-    setCode(projectID)
-     },[])
-   
+ useEffect(() => {
+    const fetchProject = async (projectID) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/project-detail/${projectID}`);
+            const data = await response.json(); // server return the project object
+            setCode(data.ProjectContent);
+
+        } catch (error) {
+            console.error('Error fetching project:', error);
+      }
+    };
+
+    fetchProject(projectID);
+  }, []);
 
 
  

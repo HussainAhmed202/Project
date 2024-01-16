@@ -213,3 +213,12 @@ class UpdateTrash(APIView):
             return Response(
                 {"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND
             )
+
+
+class ProjectDetailView(APIView):
+    def get(self, request, project_id):
+        project = get_object_or_404(Project, id=project_id)
+        serializer = ProjectSerializer(project)
+        print(serializer.data)
+        # return JsonResponse(serializer.data)
+        return Response(serializer.data)
