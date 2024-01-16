@@ -1,0 +1,27 @@
+[
+    {
+        "title": "New Project",
+        "isButton": true,
+        "action": "Your Button Action"
+    },
+    {
+        "title": "Solved",
+        "path": "/all-projects"
+    },
+    {
+        "title": "Unsolved",
+        "path": "/archived-projects"
+    },
+    {
+        "title": "Basic",
+        "path": "/trashed-projects"
+    },
+    {
+        "title": "Intermediate",
+        "path": "/archived-projects"
+    },
+    {
+        "title": "Advance",
+        "path": "/archived-projects"
+    }
+]

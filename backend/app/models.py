@@ -11,6 +11,7 @@ class User(models.Model):
 
 
 class Project(models.Model):
+<<<<<<< HEAD
     projName = models.CharField(max_length=200)
     dateModified = models.DateField()
     projectContent = models.TextField()
@@ -27,6 +28,17 @@ class Ranking(models.Model):
 
 class Question(models.Model):
     qNo = models.AutoField(primary_key=True)
+=======
+    ProjName = models.CharField(max_length=200)
+    DateModified = models.DateField()
+    ProjectContent = models.TextField()
+    IsTrash = models.BooleanField()
+    IsArchived = models.BooleanField()
+    OwnerId = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Question(models.Model):
+>>>>>>> 93e96852ae9ff7c03340fd05a1bb57776562a89a
     type = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=50)
     title = models.CharField(max_length=200)
@@ -35,6 +47,7 @@ class Question(models.Model):
     inputFormat = models.TextField()
     outputFormat = models.TextField()
     inputConstraint = models.TextField()
+<<<<<<< HEAD
 
 class TableSubmission(models.Model):
     submitId = models.AutoField(primary_key=True)
@@ -47,3 +60,5 @@ class TableSubmission(models.Model):
 
 
 
+=======
+>>>>>>> 93e96852ae9ff7c03340fd05a1bb57776562a89a
