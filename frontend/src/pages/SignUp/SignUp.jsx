@@ -1,105 +1,58 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom"
+import React from 'react';
+import './Signup.css'
+import { useNavigate } from 'react-router-dom';
 
+export default function Signup() {
+  const navigate = useNavigate(); 
 
-export default function SignUp() {
-  const navigate = useNavigate();
-  
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
- 
+  const redirectToAgree = () => {
+    // Check if all input fields are filled
+    const firstName = document.getElementById('firstname').value;
+    const lastName = document.getElementById('lastname').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-
-  const handleChange =  (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-
-  // send data to the server
-  const handleSubmit = async (e) => {
-    e.preventDefault();
- 
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/signup', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        // add token to local storage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
-         navigate('/home'); // useNavigate hook to navigate
-      }
-      
-    } catch (error) {
-      console.error('Network error:', error.message);
+    if (firstName === '' || lastName === '' || email === '' || password === '') {
+      alert('Please fill all the fields.');
+    } else {
+      // Redirect to the Agreement page
+      navigate('/agreement'); // Use navigate to go to the Agreement page
     }
   };
 
-
-
-
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
+    <>
+      <div className="container-login">
+        <div className="header-login">
+          <div className="header-login-box">
+          </div>
+        </div>
+        <div className="login-box">
+          <div className="login">
+            <h1>Sign in</h1>
+            <input className="user-input" id="firstname" type="text" placeholder="Firstname" />
+            <label htmlFor="firstname" className="login-input-icon">
+              <i className="fa fa-user"></i>
+            </label>
+            <input className="user-input" id="lastname" type="text" placeholder="Lastname" />
+            <label htmlFor="lastname" className="login-input-icon">
+              <i className="fa fa-user"></i>
+            </label>
+            <input class="user-input" id="email" type="email" placeholder="Email" />
+            <label for="email" class="login-input-icon">
+              <i class="fa fa-envelope"></i>
+            </label>
+            <input className="user-input" id="password" type="password" placeholder="Password" />
+            <label htmlFor="password" className="login-input-icon">
+              <i className="fa fa-lock"></i>
+            </label>
+            <div class="button-group">
+              <button className="previous-button" onClick={() => navigate(-1)}>Previous</button>
+              <button className="next-button" onClick={redirectToAgree}>Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
-};
-
+}

@@ -1,5 +1,5 @@
 import Signin from './pages/Signin/Signin.jsx'
-import SignUp from './pages/SignUp/SignUp2.jsx'
+import SignUp from './pages/SignUp/SignUp.jsx'
 import Home from './pages/Home/Home.jsx'
 import Password from './components/Password.jsx'
 
