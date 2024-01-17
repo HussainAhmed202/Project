@@ -4,6 +4,9 @@ var compiler = require('compilex');
 var options = { stats: true };
 compiler.init(options);
 
+// input from terminal
+let request = process.argv[2];
+request = JSON.parse(request);
 
 function executeCPP(request) {
     let envDataCPP = { OS: "windows", cmd: "g++", options: { timeout: 1000 } };

@@ -5,16 +5,21 @@ var options = { stats: true };
 compiler.init(options);
 
 
+// input from terminal
+let request = process.argv[2];
+request = JSON.parse(request);
+
+
 function executePython(request) {
-    var envDataJava = { OS: "windows", cmd: "python3", options: { timeout: 1000 } };
+    var envDataPy = { OS: "windows", cmd: "python3", options: { timeout: 1000 } };
 
     return new Promise(function (resolve, reject) {
         if (request.input === "") {
-            compiler.compilePython(envDataJava, request.code, function (data) {
+            compiler.compilePython(envDataPy, request.code, function (data) {
                 resolve(data);
             });
         } else {
-            compiler.compilePythonWithInput(envDataJava, request.code, request.input, function (data) {
+            compiler.compilePythonWithInput(envDataPy, request.code, request.input, function (data) {
                 resolve(data);
             });
         }
@@ -35,6 +40,5 @@ getResult(request)
     });
 
 
-let request = process.argv[2];
 
 

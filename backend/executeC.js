@@ -8,36 +8,30 @@ compiler.init(options);
 let request = process.argv[2];
 request = JSON.parse(request);
 
-
-function executeJava(request) {
-    var envDataJava = { OS: "windows", cmd: "javac", options: { timeout: 1000 } };
-
-    return new Promise(function (resolve, reject) {
+function executeCPP(request) {
+    let envDataCPP = { OS: "windows", cmd: "gcc", options: { timeout: 1000 } };
+    return new Promise((resolve, reject) => {
         if (request.input === "") {
-            compiler.compileJava(envDataJava, request.code, function (data) {
+            compiler.compileCPP(envDataCPP, request.code, function (data) {
                 resolve(data);
             });
         } else {
-            compiler.compileJavaWithInput(envDataJava, request.code, request.input, function (data) {
+            compiler.compileCPPWithInput(envDataCPP, request.code, request.input, function (data) {
                 resolve(data);
             });
         }
     });
 }
 
-
 async function getResult(request) {
-    return await executeJava(request);
+    return await executeCPP(request);
+
 }
 
 getResult(request)
-    .then(function (res) {
+    .then((res) => {
         console.log(res);
     })
-    .catch(function (error) {
+    .catch((error) => {
         console.error(error);
     });
-
-
-
-
