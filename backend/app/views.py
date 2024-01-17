@@ -5,6 +5,7 @@ import subprocess
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -208,6 +209,52 @@ class UpdateTrash(APIView):
             return Response(
                 {"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND
             )
+
+
+class RegisterProjectView(APIView):
+    def post(self, request):
+        proj_name = request.data.get("projName")
+        project_content = request.data.get("projectContent")
+
+        # Retrieve the user instance based on the username
+        user_instance = get_object_or_404(User, email=request.data.get("username"))
+
+        # Access the user's primary key (id)
+        user_id = user_instance.id
+
+        # Get the user object based on the provided ID
+        owner = User.objects.get(pk=user_id)
+
+        # Create a new Project instance
+        new_project = Project(
+            projName=proj_name,
+            dateModified=timezone.now().date(),
+            projectContent=project_content,
+            isTrash=False,
+            isArchived=False,
+            ownerId=owner,
+        )
+
+        # Save the new project to the database
+        new_project.save()
+
+        serializer = ProjectSerializer(new_project)
+        return Response(serializer.data)
+
+
+class UpdateProjectView(APIView):
+    def put(self, request, project_id):
+        project = get_object_or_404(Project, id=project_id)
+        new_content = request.data.get("projectContent")
+
+        # Update the projectContent field
+        project.projectContent = new_content
+
+        # Save the changes
+        project.save()
+
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProjectDetailView(APIView):

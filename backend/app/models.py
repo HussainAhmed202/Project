@@ -35,7 +35,8 @@ class Question(models.Model):
     statement = models.TextField()
     inputFormat = models.TextField()
     outputFormat = models.TextField()
-    inputConstraint = models.TextField()
+    sampleInput = models.TextField()
+    sampleOutput = models.TextField()
 
 
 class TableSubmission(models.Model):

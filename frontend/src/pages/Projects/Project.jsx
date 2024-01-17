@@ -8,61 +8,114 @@ import { SubmitButton } from '../../components/SubmitButton';
 
 
 const Project = () => {
-    const [inputText, setInputText] = useState('');
-    const [outputText, setOutputText] = useState('');
-    const [selectedLang, setselectedLang] = useState('python');
-    let [code, setCode] = useState("");
+  const [inputText, setInputText] = useState('');
+  const [outputText, setOutputText] = useState('');
+  const [selectedLang, setselectedLang] = useState('python');
+  let [code, setCode] = useState("");
+  let [projectName, setProjectName] = useState("project")
   
   // id of the selected project passed via URL
-    const { projectID } = useParams();
+  const { projectID } = useParams();
 
 
 
-    useEffect(() => {
+  useEffect(() => {
      
     const fetchProject = async (projectID) => {
         
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/project-detail/${projectID}`);
-            const data = await response.json(); // server return the project object
-            setCode(data.projectContent);
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/project-detail/${projectID}`);
+        const data = await response.json(); // server return the project object
+        setCode(data.projectContent);
+        setProjectName(data.projName);
 
-        } catch (error) {
-            console.error('Error fetching project:', error);
+      } catch (error) {
+        console.error('Error fetching project:', error);
       }
     };
 
-        if (projectID) {
-            fetchProject(projectID);
-        }
+    if (projectID) {
+      fetchProject(projectID);
+    }
   }, []);
 
     
-    function handleRun() {
-        console.log('Running the code');        
-    }
+  function handleRun() {
+    console.log('Running the code');
+  }
 
 
-    function handleDownload() {
-        console.log('Downloading file');        
-    }
+  function handleDownload() {
+    console.log('Downloading file');
+  }
 
-  function saveProject() {
-    console.log("Saving the project");
+   async function saveProject() {
+     if (typeof projectID === 'undefined') {
+        console.log("Saving new project"); 
     
-    // two cases: new project or exist project
-    // get the project id
+        // new project
+        let dataToSend = JSON.stringify({
+          "projName": projectName,
+          "projectContent": code,
+          "username": localStorage.getItem("username")
+        });
+        const response = await fetch("http://127.0.0.1:8000/api/register-project", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: dataToSend});
+          
+        if (response.ok) {
+            let ans = await response.json();
+            console.log(ans);
+        }
+        else {
+          console.log("error");
+        }
+     }
+     else {
+       // save edit
+       console.log("Editing project"); 
+    
+        // new project
+       let dataToSend = JSON.stringify({
+          "id": projectID,
+          "projectContent": code,
+        });
+        const response = await fetch(`http://127.0.0.1:8000/api/update-project/${projectID}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: dataToSend});
+          
+        if (response.ok) {
+            let ans = await response.json();
+            console.log(ans);
+        }
+        else {
+          console.log("error");
+        }
+     }
 
-      
-    }
+     
+  };
 
-    function handleDebug() {
+  function handleDebug() {
         console.log('Debugging the code');        
     }
 
  
      const handleInputChange = (event) => {
         setInputText(event.target.value);
+        
+  };
+  
+   const handleProjectNameChange = (event) => {
+        setProjectName(event.target.value);
         
     };
 
@@ -112,16 +165,31 @@ const Project = () => {
           code={code}
           setCode={setCode}
           height="500px"
-          width="100%"
-        />
+           width="100%" />
+         
         <div style={{ position: 'absolute', top: '25px', left: '221px' }}>
           <SubmitButton
             name="Save"
             plural="Saving"
              items={{ "Run": handleRun, "Debug": handleDebug, "Download": handleDownload }}
-             method={saveProject}
+             method={saveProject}/>
+         </div>
+
+          <div className="box" style={{position: 'absolute', top: '30px', right: '27px' }}>
+          <textarea
+            value={projectName}
+             placeholder="Project Name"
+             onChange={handleProjectNameChange}
+          
+          style={{ width: '170px', height: '30px' }}
           />
-        </div>
+         </div>
+
+         
+         
+         
+
+         
       </div>
     </div>
   );
