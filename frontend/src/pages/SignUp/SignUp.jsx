@@ -1,5 +1,5 @@
 import React from 'react';
-import './Signup.css'
+import '../../styles/Signup.css'
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
@@ -23,13 +23,9 @@ export default function Signup() {
   return (
     <>
       <div className="container-login">
-        <div className="header-login">
-          <div className="header-login-box">
-          </div>
-        </div>
         <div className="login-box">
           <div className="login">
-            <h1>Sign in</h1>
+            <h1>Sign Up</h1>
             <input className="user-input" id="firstname" type="text" placeholder="Firstname" />
             <label htmlFor="firstname" className="login-input-icon">
               <i className="fa fa-user"></i>

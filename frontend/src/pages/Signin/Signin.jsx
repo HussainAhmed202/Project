@@ -1,6 +1,4 @@
-import './Signin.css'
-//import Cookies  from 'js-cookie';
-
+import '../../styles/Signin.css';
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from "react-router-dom"
 

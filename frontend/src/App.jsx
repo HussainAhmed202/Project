@@ -28,8 +28,8 @@ export default function App() {
              <Route path="/archive" element={<Home Table={ArchiveProjectTable}/>} /> 
             <Route path="/project" element={<Project />} /> 
             <Route path="/project/:projectID" element={<Project />} /> 
-            <Route path="/home/challenges" element={<Questions />} />
-            <Route path="/home/challenges/:questionID" element={<ChallengePage />} />
+            <Route path="/challenges" element={<Questions />} />
+            <Route path="/challenges/:questionID" element={<ChallengePage />} />
           
           
             

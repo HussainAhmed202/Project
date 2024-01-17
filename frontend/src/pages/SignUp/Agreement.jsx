@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Signin/Signin.css';
+import '../../styles/Signin.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function Agreement() {
@@ -22,11 +22,6 @@ export default function Agreement() {
 
     return (
         <div className="container-login">
-            <div className="header-login">
-                <div className="header-login-box">
-                    <span className="header-text-position"></span>
-                </div>
-            </div>
             <div className="login-box">
                 <div className="login">
                     <h1>User Agreement</h1>
