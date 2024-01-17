@@ -1,5 +1,5 @@
 import Signin from './pages/Signin/Signin.jsx'
-import SignUp from './pages/SignUp/SignUp.jsx'
+import SignUp from './pages/SignUp/SignUp2.jsx'
 import Home from './pages/Home/Home.jsx'
 import Password from './components/Password.jsx'
 
@@ -11,6 +11,7 @@ import ChallengePage from './pages/Challenge/ChallengePage.jsx'
 import { Routes, Route } from 'react-router-dom'
 import Project from './pages/Projects/Project.jsx'
 import Questions from './pages/Questions/Questions.jsx'
+import Agreement from './pages/SignUp/Agreement.jsx'
 //import Editor from './components/Editor copy.jsx'
 
 export default function App() {
@@ -19,7 +20,8 @@ export default function App() {
     
         <Routes>
             <Route path="/" element={<Signin />} />
-            <Route path="/signup" element={<SignUp />}/>
+            <Route path="/signup" element={<SignUp />} />
+             <Route path="/agreement" element={<Agreement />} />
             <Route path="/change-password" element={<Password />}/>
             <Route path="/home" element={<Home Table={AllProjectTable} />} /> 
             <Route path="/trash" element={<Home Table={TrashProjectTable}/>} /> 
