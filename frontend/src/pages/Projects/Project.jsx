@@ -19,13 +19,15 @@ const Project = () => {
 
 
 
+
+
   useEffect(() => {
      
     const fetchProject = async (projectID) => {
         
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/project-detail/${projectID}`);
-        const data = await response.json(); // server return the project object
+        const data = await response.json(); 
         setCode(data.projectContent);
         setProjectName(data.projName);
 
@@ -40,8 +42,36 @@ const Project = () => {
   }, []);
 
     
-  function handleRun() {
+  async function handleRun() {
     console.log('Running the code');
+    console.log(selectedLang);
+    console.log(inputText);
+    console.log(code);
+    
+    let dataToSend = JSON.stringify(
+      {
+        "language": selectedLang,
+        "input": inputText,
+        "code": code,
+      });
+    
+     const response = await fetch("http://127.0.0.1:8000/api/exe", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: dataToSend});
+          
+        if (response.ok) {
+            let ans = await response.json();
+            console.log(ans);
+        }
+        else {
+          console.log("error");
+        }
+    
+    
     
   }
 
@@ -111,7 +141,7 @@ const Project = () => {
 
  
      const handleInputChange = (event) => {
-        setInputText(event.target.value);
+       setInputText(event.target.value);
         
   };
   

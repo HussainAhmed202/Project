@@ -161,24 +161,33 @@ class QuestionView(APIView):
 
 class ExecutionView(APIView):
     def post(self, request):
-        req = json.dumps(request)
-        os.chdir(os.path.dirname(os.getcwd()))
-        if request["language"] == "Python":
-            p1 = subprocess.run(
-                ["node", "executePython.js", request], capture_output=True, text=True
-            )
+        lang = request.data["language"]
+        lang_to_exefile_mapping = {
+            "python": "./executePython.js",
+            "java": "./executeJava.js",
+            "cpp": "./executeCPP.js",
+            "c": "./executeC.js",
+        }
 
-        elif request["language"] == "CPP":
-            p1 = subprocess.run(
-                ["node", "executeCPP.js", request], capture_output=True, text=True
-            )
+        print(os.getcwd())
 
-        elif request["language"] == "Java":
-            p1 = subprocess.run(
-                ["node", "executeJava.js", request], capture_output=True, text=True
-            )
-        print(p1)
-        return HttpResponse(p1)
+        # file_to_execute = lang_to_exefile_mapping[lang]
+        # req = json.dumps(request.data)
+        # # print(req)
+
+        # # EXG:  node executePython.js {"language": "Python","code": 'user_input = input("Enter something: ")\nprint("You entered:", user_input)',"input": "Hello in python",}
+        # p1 = subprocess.run(
+        #     ["node", file_to_execute, req], capture_output=True, text=True
+        # )
+        # if p1.returncode == 0:
+        #     output = p1.stdout
+        #     return Response({"success": True, "output": output})
+        # else:
+        #     error_message = p1.stderr
+        #     return Response(
+        #         {"success": False, "error": error_message},
+        #         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        #     )
 
 
 class UpdateArchive(APIView):

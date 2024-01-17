@@ -11,10 +11,10 @@
     },
     {
         "title": "Archived Projects",
-        "path": "/home/archive"
+        "path": "/archive"
     },
     {
         "title": "Trashed Projects",
-        "path": "/home/trash"
+        "path": "/trash"
     }
 ]

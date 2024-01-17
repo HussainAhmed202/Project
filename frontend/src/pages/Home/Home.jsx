@@ -8,7 +8,7 @@ import Popup from "../../components/Popup";
 import SidebarItem from "../../components/SidebarItem";
 import items from "../../data/sidebar.json";
 
-export default function Home() {
+export default function Home({Table, ...props}) {
   console.log(window.location.pathname);
   return ( 
     <>
@@ -20,9 +20,10 @@ export default function Home() {
         <div className="container">
           <SearchBar />
           <br />
-          <AllProjectTable /> 
+          <Table/>
+          {/* <AllProjectTable /> 
           <TrashProjectTable />
-          <ArchiveProjectTable /> 
+          <ArchiveProjectTable />  */}
            <Popup/>
         </div>
        
