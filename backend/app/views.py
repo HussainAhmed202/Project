@@ -183,8 +183,35 @@ class ExecutionView(APIView):
             ["node", file_to_execute, req], capture_output=True, text=True
         )
         if p1.returncode == 0:
-            output = p1.stdout
-            return Response({"success": True, "output": output})
+            output_start = p1.stdout.find("{")
+            output_end = p1.stdout.rfind("}") + 1
+            json_output = p1.stdout[output_start:output_end]
+            print(json_output)  # { output: 'hello world\r\n' }
+            colon_index = json_output.find(":")
+
+            # Find the index of the closing curly brace
+            closing_brace_index = json_output.find("}", colon_index)
+
+            # Extract everything after the colon and before the closing curly brace
+            if colon_index != -1 and closing_brace_index != -1:
+                output_value = json_output[
+                    colon_index + 1 : closing_brace_index
+                ].strip()
+                print(output_value)  # 'hello world\r\n'
+                output_value = output_value.replace("'", "")
+                output_value = output_value.strip("\r\n")
+
+            # output_value = output_value.replace("\r\n", " ")
+            else:
+                print("Colon or closing curly brace not found in the string.")
+
+            return Response(output_value)
+
+            # return JsonResponse({"output": json_output})
+            # return JsonResponse([json_output])
+
+            # return JsonResponse({"hi"})
+
         else:
             error_message = p1.stderr
             return Response(

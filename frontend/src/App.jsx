@@ -8,19 +8,19 @@ import TrashProjectTable from './components/TrashProjectTable.jsx'
 import ArchiveProjectTable from './components/ArchiveProjectTable.jsx'
 import ChallengePage from './pages/Challenge/ChallengePage.jsx'
 
-import TestExample from './components/test.jsx'
 
 import { Routes, Route } from 'react-router-dom'
 import Project from './pages/Projects/Project.jsx'
 import Questions from './pages/Questions/Questions.jsx'
 import Agreement from './pages/SignUp/Agreement.jsx'
-import Modal from './components/Modal.jsx'
+import { Modal } from 'react-bootstrap'
+
 //import Editor from './components/Editor copy.jsx'
 
 export default function App() {
     return (
-        
 
+        
         
         <Routes>
             <Route path="/" element={<Signin />} />
@@ -34,7 +34,6 @@ export default function App() {
             <Route path="/project/:projectID" element={<Project />} /> 
             <Route path="/challenges" element={<Questions />} />
             <Route path="/challenges/:questionID" element={<ChallengePage />} />
-        </Routes>
-            
+        </Routes>         
     )
 }

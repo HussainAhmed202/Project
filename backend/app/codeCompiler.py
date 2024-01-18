@@ -44,3 +44,10 @@ req = json.dumps(request)
 # EXG:  node executePython.js {"language": "Python","code": 'user_input = input("Enter something: ")\nprint("You entered:", user_input)',"input": "Hello in python",}
 p1 = subprocess.run(["node", file_to_execute, req], capture_output=True, text=True)
 print(p1.stdout)
+
+# output_start = p1.stdout.find("{")
+# output_end = p1.stdout.rfind("}") + 1
+# json_output = p1.stdout[output_start:output_end]
+
+# # Print the extracted JSON output
+# print(json_output)
