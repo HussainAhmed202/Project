@@ -5,6 +5,7 @@ import { dracula } from '@uiw/codemirror-theme-dracula';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs';
 import { useParams } from 'react-router-dom';
 import { SubmitButton } from '../../components/SubmitButton';
+import BrandExample from '../../components/Navbar';
 
 
 const Project = () => {
@@ -150,7 +151,12 @@ const Project = () => {
         
     };
 
-   return (
+  return (
+    
+    <>
+    <BrandExample/>
+    
+
    <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{ flex: 1, padding: '20px' }}>
         <div className="box" style={{ marginBottom: '20px' }}>
@@ -158,7 +164,7 @@ const Project = () => {
             value={inputText}
             onChange={handleInputChange}
             placeholder="Enter your input here"
-            style={{ width: '100%', height: '150px' }}
+            style={{ width: '100%', height: '150px',marginTop:"8px" }}
           />
         </div>
 
@@ -169,24 +175,6 @@ const Project = () => {
             style={{ width: '100%', height: '150px' }}
           />
         </div>
-
-        <div className="box" style={{ marginBottom: '20px' }}>
-          <textarea
-            value={code}
-            placeholder="get code text"
-            readOnly
-            style={{ width: '100%', height: '300px' }}
-          />
-        </div>
-
-        <div className="box" style={{ marginBottom: '20px' }}>
-          <textarea
-            value={selectedLang}
-            placeholder="get selected language"
-            readOnly
-            style={{ width: '100%', height: '50px' }}
-          />
-        </div>
       </div>
            
       <div style={{ flex: 1, padding: '20px', position: 'relative' }}>
@@ -195,7 +183,7 @@ const Project = () => {
           setselectedLang={setselectedLang}
           code={code}
           setCode={setCode}
-          height="500px"
+          height="470px"
            width="100%" />
          
         <div style={{ position: 'absolute', top: '25px', left: '221px' }}>
@@ -214,15 +202,11 @@ const Project = () => {
           
           style={{ width: '170px', height: '30px' }}
           />
-         </div>
-
-         
-         
-         
-
-         
+          </div>
+        </div>
       </div>
-    </div>
+      </>
+
   );
 };
 

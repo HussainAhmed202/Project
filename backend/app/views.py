@@ -10,7 +10,7 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Project, Question, Ranking, TableSubmission, User
+from .models import Challenge, Project, Ranking, TableSubmission, User
 from .serializers import (
     LoginSerializer,
     ProjectSerializer,
@@ -60,6 +60,7 @@ class SignUpView(APIView):
     def post(self, request, *args, **kwargs):
         # data = {'FirstName': 'pop', 'LastName': 'lop', 'Email': 'poplop@mail.com', 'Password': 'sdfsdfs'}
         serializer = SignUpSerializer(data=request.data)
+        print(request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -93,7 +94,7 @@ class SignUpView(APIView):
             return Response(
                 {
                     "status": "user registered",
-                    "username": username,
+                    "email": username,
                     "token": "xyz123",
                     "password": password,
                     "firstname": firstname,
@@ -154,40 +155,42 @@ class ArchiveProjectView(APIView):
 
 
 class QuestionView(APIView):
-    def get(self, request, *args, **kwargs):
-        serializer = QuestionSerializer(request.data)
-        return HttpResponse(serializer)
+    def get(self, request):
+        # Retrieve data from the database
+        data = Challenge.objects.all()
+        serializer = QuestionSerializer(data, many=True)
+        print(serializer.data)
+
+        # Convert data to JSON and send as a response
+        return JsonResponse(serializer.data, safe=False)
 
 
 class ExecutionView(APIView):
     def post(self, request):
         lang = request.data["language"]
         lang_to_exefile_mapping = {
-            "python": "./executePython.js",
-            "java": "./executeJava.js",
-            "cpp": "./executeCPP.js",
-            "c": "./executeC.js",
+            "python": "executePython.js",
+            "java": "executeJava.js",
+            "cpp": "executeCPP.js",
+            "c": "executeC.js",
         }
+        file_to_execute = lang_to_exefile_mapping[lang]
+        req = json.dumps(request.data)
+        # print(req)
 
-        print(os.getcwd())
-
-        # file_to_execute = lang_to_exefile_mapping[lang]
-        # req = json.dumps(request.data)
-        # # print(req)
-
-        # # EXG:  node executePython.js {"language": "Python","code": 'user_input = input("Enter something: ")\nprint("You entered:", user_input)',"input": "Hello in python",}
-        # p1 = subprocess.run(
-        #     ["node", file_to_execute, req], capture_output=True, text=True
-        # )
-        # if p1.returncode == 0:
-        #     output = p1.stdout
-        #     return Response({"success": True, "output": output})
-        # else:
-        #     error_message = p1.stderr
-        #     return Response(
-        #         {"success": False, "error": error_message},
-        #         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        #     )
+        # EXG:  node executePython.js {"language": "Python","code": 'user_input = input("Enter something: ")\nprint("You entered:", user_input)',"input": "Hello in python",}
+        p1 = subprocess.run(
+            ["node", file_to_execute, req], capture_output=True, text=True
+        )
+        if p1.returncode == 0:
+            output = p1.stdout
+            return Response({"success": True, "output": output})
+        else:
+            error_message = p1.stderr
+            return Response(
+                {"success": False, "error": error_message},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class UpdateArchive(APIView):
@@ -270,6 +273,15 @@ class ProjectDetailView(APIView):
     def get(self, request, project_id):
         project = get_object_or_404(Project, id=project_id)
         serializer = ProjectSerializer(project)
+        print(serializer.data)
+        # return JsonResponse(serializer.data)
+        return Response(serializer.data)
+
+
+class QuestionDetailView(APIView):
+    def get(self, request, question_id):
+        question = get_object_or_404(Challenge, id=question_id)
+        serializer = QuestionSerializer(question)
         print(serializer.data)
         # return JsonResponse(serializer.data)
         return Response(serializer.data)

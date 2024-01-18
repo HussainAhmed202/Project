@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Status",
+        "childrens": [
+            {
+                "title": "Solved"
+            },
+            {
+                "title": "Unsolved"
+            }
+        ]
+    },
+    {
+        "title": "Skills",
+        "childrens": [
+            {
+                "title": "Basic"
+            },
+            {
+                "title": "Intermediate"
+            },
+            {
+                "title": "Hard"
+            }
+        ]
+    }
+]

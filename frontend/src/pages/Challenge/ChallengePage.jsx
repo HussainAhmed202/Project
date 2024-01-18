@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SplitLayout.css';
 import DisplayChallenge from '../../components/DisplayChallenge';
 import Editor from '../../components/Editor copy';
@@ -9,9 +9,33 @@ const ChallengePage = () => {
 
     const [selectedLang, setselectedLang] = useState('python');
   let [code, setCode] = useState("");
+  let [question, setQuestion] = useState("");
 
   // id of the selected question passed via URL
-    const { questionID } = useParams();
+  const { questionID } = useParams();
+  console.log(questionID);
+
+  useEffect(() => {
+     
+    const fetchQuestion = async (questionID) => {
+        
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/question/${questionID}`);
+        const data = await response.json(); 
+        console.log(data);
+        setQuestion(data);
+
+      } catch (error) {
+        console.error('Error fetching project:', error);
+      }
+    };
+
+    if (questionID) {
+      fetchQuestion(questionID);
+    }
+  }, []);
+
+
 
 
 
@@ -62,20 +86,6 @@ const ChallengePage = () => {
     
   }
 
-   
- 
-    const question =
-        {
-            id: "1",
-            statement: "In this challenge, the user enters a string and a substring. You have to print the number of times that the substring occurs in the given string. String traversal will take place from left to right, not from right to left. ",
-            Input_Format: "The first line of input contains the original string. The next line contains the substring.",
-            Output_Format: "Output the integer number indicating the total number of occurrences of the substring in the original string.",
-            Sample_Input: "ABCDCDC",
-            Sample_Output: "2",
-        } 
-
-
-        
   return (
     <div className="split-layout">
       <div className="left-panel" style={{ width: leftWidth, color: "wheat" }}>

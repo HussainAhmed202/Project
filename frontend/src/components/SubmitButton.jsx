@@ -24,26 +24,7 @@ export function SubmitButton({name,plural,items,method}) {
     async function handleClick() {
     // sends the code to the backend
       setLoading(true);
-      await method();
-
-    // try {
-    //   const response = await fetch('http://127.0.0.1:8000/execute/', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ code: codeContent }),
-    //   });
-
-    //   if (response.ok) {
-    //     console.log('Data added successfully!');
-  
-    //   } else {
-    //     console.error('Error adding data:');
-    //   }
-    // } catch (error) {
-    //   console.error('Network error:', error.message);
-    // }
+    await method();
   };
 
 

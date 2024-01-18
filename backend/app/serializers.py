@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Project, Question, Ranking, TableSubmission, User
+from .models import Challenge, Project, Ranking, TableSubmission, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class RankingSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Question
+        model = Challenge
         fields = "__all__"
 
 

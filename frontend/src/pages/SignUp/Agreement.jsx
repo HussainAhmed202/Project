@@ -1,9 +1,15 @@
 import React from 'react';
 import '../../styles/Signin.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Agreement() {
+    const location = useLocation();
+    const { userData } = location.state;
+
     const navigate = useNavigate();
+
+    // Access user data
+     console.log(location.state);
   
     const goToPrevious = () => {
       navigate(-1);
@@ -13,9 +19,40 @@ export default function Agreement() {
       const checkboxChecked = document.querySelector('.login-checkbox input').checked;
   
       if (checkboxChecked) {
-        console.log('Form validated. Ready for submission.');
-          navigate('/home');
-      } else {
+          console.log('Form validated. Ready for submission.');
+          
+          // register user
+          const dataToSend = JSON.stringify(location.state);
+          fetch("http://127.0.0.1:8000/api/signup", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',    
+        },
+        body: dataToSend,
+          })
+          
+          .then((response) => {
+          if (response.ok) {
+              return response.json();
+      }
+    }
+      )    
+        .then((data) => {
+          if (data) {
+            console.log(data);
+             // add token to local storage
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('username', data.email);
+            navigate('/home'); 
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        }
+          )
+      }
+      else {
         alert('Please agree to the terms before submitting.');
       }
     };

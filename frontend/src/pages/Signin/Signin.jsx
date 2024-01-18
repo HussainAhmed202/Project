@@ -40,7 +40,7 @@ export default function SignIN() {
              // add token to local storage
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', data.email);
-            navigate('/home'); // useNavigate hook to navigate
+            navigate('/home'); 
           }
         })
         .catch((error) => {

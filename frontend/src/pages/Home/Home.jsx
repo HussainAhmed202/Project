@@ -5,6 +5,7 @@ import Sidebar from '../../components/Sidebar'
 import TrashProjectTable from "../../components/TrashProjectTable";
 import ArchiveProjectTable from "../../components/ArchiveProjectTable";
 import Popup from "../../components/Popup";
+import langSelectPopup from "../../components/langSelect";
 import SidebarItem from "../../components/SidebarItem";
 import items from "../../data/sidebar.json";
 
@@ -21,10 +22,7 @@ export default function Home({Table, ...props}) {
           <SearchBar />
           <br />
           <Table/>
-          {/* <AllProjectTable /> 
-          <TrashProjectTable />
-          <ArchiveProjectTable />  */}
-           <Popup/>
+          <langSelect/>
         </div>
        
      </div>

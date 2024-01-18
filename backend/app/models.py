@@ -27,9 +27,21 @@ class Ranking(models.Model):
     level = models.IntegerField()
 
 
-class Question(models.Model):
-    type = models.CharField(max_length=50)
-    difficulty = models.CharField(max_length=50)
+class Challenge(models.Model):
+    TYPE_CHOICES = [
+        ("basic", "Basic"),
+        ("advance", "Advance"),
+        ("intermediate", "Intermediate"),
+    ]
+
+    DIFFICULTY_CHOICES = [
+        ("easy", "Easy"),
+        ("hard", "Hard"),
+        ("medium", "Medium"),
+    ]
+
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+    difficulty = models.CharField(max_length=50, choices=DIFFICULTY_CHOICES)
     title = models.CharField(max_length=200)
     points = models.IntegerField()
     statement = models.TextField()
@@ -40,7 +52,7 @@ class Question(models.Model):
 
 
 class TableSubmission(models.Model):
-    qNumber = models.ForeignKey("Question", on_delete=models.CASCADE)
+    qNumber = models.ForeignKey("Challenge", on_delete=models.CASCADE)
     creatorId = models.ForeignKey(User, on_delete=models.CASCADE)
     isSuccessful = models.BooleanField()
     submitLang = models.CharField(max_length=50)

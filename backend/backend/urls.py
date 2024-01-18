@@ -29,6 +29,7 @@ urlpatterns = [
     path("api/register-project", views.RegisterProjectView.as_view()),
     path("api/update-project/<int:project_id>", views.UpdateProjectView.as_view()),
     path("api/questions", views.QuestionView.as_view()),
+    path("api/question/<int:question_id>", views.QuestionDetailView.as_view()),
     path("api/exe", views.ExecutionView.as_view()),
     path("api/update-archive/<int:project_id>", views.UpdateArchive.as_view()),
     path("api/update-trash/<int:project_id>", views.UpdateTrash.as_view()),

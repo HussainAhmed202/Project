@@ -16,7 +16,9 @@ export default function Signup() {
       alert('Please fill all the fields.');
     } else {
       // Redirect to the Agreement page
-      navigate('/agreement'); // Use navigate to go to the Agreement page
+      const userData = { "firstName": firstName, "lastName": lastName, "email": email, "password": password };
+      console.log(userData);
+      navigate('/agreement',{state:userData});
     }
   };
 
